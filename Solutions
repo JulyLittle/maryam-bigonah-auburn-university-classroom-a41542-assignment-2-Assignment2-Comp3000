@@ -1,0 +1,186 @@
+(ASSIGNMENT 1)
+#include <iostream>
+using namespace std;
+bool isLeapYear(const int year)
+{ //equation determines if it was a leap year
+    return (((year % 4 == 0) && (year % 100 != 0)) ||
+
+    (year % 400 == 0));
+}
+int getCenturyValue(const int year)
+{
+    int t = year / 100;
+    int rem = t % 4;
+    t=4;
+    rem=3-rem;
+    return rem*2;
+}
+int getYearValue(const int year)
+{
+    int t = year % 100;
+    const int div = t / 4;
+    return div + t;
+}
+int getMonthValue(int month, const int year)
+{ //this code functions to determine if the year entered was a leap year
+    if(month==1 && isLeapYear(year))
+        return 6;
+    else if(month ==1)
+        return 0;
+    else if(month ==2 && isLeapYear(year))
+        return 2;
+    else if(month==2)
+        return 3;
+    else
+    {
+        switch(month)
+        {
+            case 3:
+            return 3;
+            case 4:
+            return 6;
+            case 5:
+            return 1;
+            case 6:
+            return 4;
+            case 7:
+            return 6;
+            case 8:
+            return 2;
+            case 9:
+            return 5;
+            case 10:
+            return 0;
+            case 11:
+            return 3;
+            case 12:
+            return 5;
+        }
+    }
+    return 0;
+}
+int main()
+{
+    //these functions will take user input and return what day of the week it was
+    int month,year,day;
+    cout<<"Enter a month: "<<endl;
+    cin>>month;
+    while(month<1 || month>12)
+    {
+    cout<<"Enter a value between 1 and 12"<<endl;
+    cin>>month;
+    }
+    cout<<"Enter a day: "<<endl;
+    cin>>day;
+    while(day<1 || day>31)
+    {
+    cout<<"Enter a value between 1 and 31"<<endl;
+    cin>>day;
+    }
+    cout<<"Enter a year: "<<endl;
+    cin>>year;
+    int sum = day + getMonthValue(month, year) + getYearValue(year) + getCenturyValue(year);
+    sum=sum%7;
+    switch(sum)
+    {
+        case 0:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Sunday."<<endl;
+        break;
+        case 1:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Monday."<<endl;
+        break;
+        case 2:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Tuesday."<<endl;
+        break;
+        case 3:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Wednesday."<<endl;
+        break;
+        case 4:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Thursday."<<endl;
+        break;
+        case 5:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Friday."<<endl;
+        break;
+        case 6:
+        cout<<month<<"/"<<day<<"/"<<year<<" is a "<<"Saturday."<<endl;
+        break;
+    default: ;
+    }
+    return 0;
+}
+
+(ASSIGNMENT 2)
+#include <iostream>
+
+using namespace std;
+void computeCoin(int coinValue, int &number, int &amountLeft)
+{
+    // convert and display
+    cout<<"\nCoins can be given as :: ";
+    number = coinValue/25;
+    cout<<"\n"<<number<<" quarter";
+    amountLeft=coinValue-25*number;
+    int dimes = amountLeft/10;
+    cout<<"\n"<<dimes<<" dimes";
+    amountLeft = amountLeft-10*dimes;
+    cout<<"\n"<<amountLeft<<" pennies";
+}
+int main()
+{
+    int amt;
+    int number, amountLeft;
+    char ans;
+    do { do {
+    cout<<"\nEnter an amount of change between 1 and 99 :: ";
+    cin>>amt;
+    }
+    while (amt<1 || amt>99);
+    // function call, amt is amount
+     computeCoin(amt, number, amountLeft);
+    cout<<"\nDo you want to make change again?";
+    cout<<"\nPress Y to continue and N to exit :: ";
+    cin>>ans;
+    }
+    while(ans=='Y');
+    return 0;
+}
+
+(ASSIGNMENT 3)
+#include <iostream>
+#include <iomanip>
+using namespace std;
+double convertToMPH(int min, int sec)
+{
+    //equations to convert user input to miles per hour
+    double total = min*60 + sec;
+    double mph = 3600/total;
+    return mph;
+}
+double convertToMPH(double kph ){
+    double mph = kph/1.61;
+    return mph;
+}
+int main(){
+    //mpl is minutes per mile, spl is seconds per mile, kph is kilometers per hour
+    double mpl,spl,kph;
+    cout<<"\nEnter the minutes per mile of your pace:";
+    cin>>mpl;
+    if(mpl<0)
+    {
+    cout<<"\nEnter a positive value:";
+    cin>>mpl;
+    }
+    cout<<"\nEnter the seconds per mile of your pace:";
+    cin>>spl;
+    if(spl<0 || spl>59)
+    {
+    cout<<"\nEnter a value between 0-59: ";
+    cin>>spl;
+    }
+    cout<<"\nEnter the kilometers per hour:";
+    cin>>kph;
+    cout<<"\n"<<mpl<<" minutes and "<<spl<<" seconds a mile is: "<<fixed<<setprecision(1)<<convertToMPH(mpl,spl)<<" MPH"<<endl;
+    cout<<kph<<" kilometers per mile is "<<fixed<<setprecision(1)<<convertToMPH(kph)<<" MPH"<<endl;
+    return 0;
+
+}
